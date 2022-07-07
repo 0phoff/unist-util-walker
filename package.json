@@ -1,0 +1,49 @@
+{
+    "name": "unist-util-walker",
+    "version": "0.1.0",
+    "description": "Walk unist trees with enter and leave functions",
+    "license": "MIT",
+    "author": "0phoff <0phoff@users.noreply.github.com>",
+    "keywords": [
+        "unified",
+        "unifiedjs",
+        "unist",
+        "ast",
+        "tree",
+        "walk",
+        "visit",
+    ],
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist/**/*.js",
+        "dist/index.d.ts"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "test-api": "tsx node_modules/uvu/bin.js test \"^(base|actions)\\.ts$\"",
+        "test-cov": "c8 --check-coverage --100 --reporter lcov pnpm run test-api",
+        "test": "pnpm run build && pnpm run test-cov",
+        "prepack": "npm run build"
+    },
+    "devDependencies": {
+        "@types/node": "^18.0.1",
+        "c8": "^7.11.3",
+        "tsx": "^3.7.1",
+        "typescript": "^4.7.4",
+        "unist-builder": "^3.0.0",
+        "uvu": "^0.5.6"
+    },
+    "dependencies": {
+        "@types/unist": "^2.0.6",
+        "unified": "^10.1.2"
+    }
+}
