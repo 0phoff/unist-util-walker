@@ -1,0 +1,56 @@
+name: publish
+on: 
+  push:
+    tags:
+      - 'v*'
+jobs:
+  test:
+    name: test / ${{matrix.os}} / ${{matrix.node}}
+    runs-on: ${{matrix.os}}
+    steps:
+      - name: Set git to use LF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node}}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run test-api
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - windows-latest
+          - ubuntu-latest
+        node:
+          - 'latest'
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'latest'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          pnpm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
+          pnpm publish --no-git-checks
