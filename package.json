@@ -11,7 +11,7 @@
         "ast",
         "tree",
         "walk",
-        "visit",
+        "visit"
     ],
     "type": "module",
     "main": "dist/index.js",
