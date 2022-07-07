@@ -4,7 +4,7 @@
 _Talk the Talk - Walk the Tree_  
 [![npm version](https://badge.fury.io/js/unist-util-walker.svg)](https://badge.fury.io/js/unist-util-walker)
 [![main](https://github.com/0phoff/unist-util-walker/actions/workflows/main.yml/badge.svg)](https://github.com/0phoff/unist-util-walker/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/0phoff/unist-util-walker/branch/main/graph/badge.svg?token=Y7P3PF5SKQ)](https://codecov.io/gh/0phoff/unist-util-walker)
+[![codecov](https://codecov.io/gh/0phoff/unist-util-walker/branch/master/graph/badge.svg?token=JWVVNRI6IK)](https://codecov.io/gh/0phoff/unist-util-walker)
 
 </div>
 
