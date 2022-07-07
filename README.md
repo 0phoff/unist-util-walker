@@ -36,12 +36,12 @@ import { walk } from 'unist-util-walker';
 import { u } from 'unist-builder';
 
 const tree: Node = u('root', [
-	u('subtree', {id: 1}),
-	u('subtree', {id: 2}, [
-		u('node', [u('leaf', {id: 1}), u('leaf', {id: 2})]),
-		u('leaf', {id: 3}),
-	    u('void')
-	])
+  u('subtree', {id: 1}),
+  u('subtree', {id: 2}, [
+    u('node', [u('leaf', {id: 1}), u('leaf', {id: 2})]),
+    u('leaf', {id: 3}),
+    u('void'),
+  ]),
 ]);
 
 walk(tree, {
