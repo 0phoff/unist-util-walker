@@ -3,7 +3,7 @@
 # UNIST UTIL WALKER
 _Talk the Talk - Walk the Tree_  
 [![npm version](https://img.shields.io/npm/v/unist-util-walker?color=blue&logo=npm)](https://www.npmjs.com/package/unist-util-walker)
-[![npm downloads](https://img.shields.io/npm/dt/unist-util-walker?color=blue)](https://www.npmjs.com/package/unist-util-walker)
+[![npm downloads](https://img.shields.io/npm/dt/unist-util-walker?color=blue&logo=nodedotjs)](https://www.npmjs.com/package/unist-util-walker)
 [![main](https://github.com/0phoff/unist-util-walker/actions/workflows/main.yml/badge.svg)](https://github.com/0phoff/unist-util-walker/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/0phoff/unist-util-walker/branch/master/graph/badge.svg?token=JWVVNRI6IK)](https://codecov.io/gh/0phoff/unist-util-walker)
 
