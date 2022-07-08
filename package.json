@@ -5,13 +5,15 @@
     "license": "MIT",
     "author": "0phoff <0phoff@users.noreply.github.com>",
     "keywords": [
-        "unified",
+        "syntax-tree",
         "unifiedjs",
         "unist",
+        "unist-util",
         "ast",
         "tree",
         "walk",
-        "visit"
+        "visit",
+        "traverse"
     ],
     "repository": {
         "type": "git",
