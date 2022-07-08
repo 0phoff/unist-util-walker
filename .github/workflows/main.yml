@@ -1,7 +1,10 @@
 name: main
 on:
-  - pull_request
-  - push
+  pull_request:
+  push:
+    tags-ignore:
+      - 'v*'
+
 jobs:
   small:
     name: test / ${{matrix.os}} / ${{matrix.node}}
