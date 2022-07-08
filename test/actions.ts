@@ -148,4 +148,66 @@ test('using replace and remove in the leave function', () => {
 });
 
 
+// Removing root
+test('removing root node is not allowed', () => {
+	const tree = walk(createBasicAST(), {
+		enter(node) {
+			if (node.type === 'root') {
+				this.remove();
+			}
+		}
+	});
+
+	assert.equal(tree, createBasicAST());
+});
+
+
+// Modifying root
+test('modifying root in enter', () => {
+	const tree = createBasicAST({startRoot: true});
+
+	walk(tree, {
+		enter(node) {
+			if (node.type === 'root') {
+				const {startRoot, ...remainder} = node as any;
+				this.replace({
+					...remainder,
+					id: 666,
+				});
+			}
+		}
+	});
+
+	const manualTree = createBasicAST();
+	// @ts-ignore: set id
+	manualTree.id = 666;
+
+	assert.equal(tree, manualTree);
+});
+
+
+// Modifying root in leave
+test('modifying root in leave', () => {
+	const tree = createBasicAST({startRoot: true});
+
+	walk(tree, {
+		leave(node) {
+			if (node.type === 'root') {
+				const {startRoot, ...remainder} = node as any;
+				this.replace({
+					...remainder,
+					id: 666,
+				});
+			}
+		}
+	});
+
+	const manualTree = createBasicAST();
+	// @ts-ignore: set id
+	manualTree.id = 666;
+
+	assert.equal(tree, manualTree);
+});
+
+
 test.run();

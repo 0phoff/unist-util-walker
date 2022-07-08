@@ -24,8 +24,8 @@ export class Logger {
 }
 
 
-export function createBasicAST(): Node {
-	return u('root', [
+export function createBasicAST(extra: any = {}): Node {
+	return u('root', extra, [
 		u('subtree', {id: 1}),
 		u('subtree', {id: 2}, [
 			u('node', [u('leaf', {id: 1}), u('leaf', {id: 2})]),

@@ -2,16 +2,26 @@
  * Custom tree traversal function that mimics estree-walker, but works with unist types
  * Note that not all functionality from estree-walker is implemented !
  */
-import { Node, Parent } from 'unist';
+import type { Node, Parent } from 'unist';
 
-interface WalkerContext {
-	skip: () => void;
-	break: () => void;
-	remove: () => void;
-	replace: (node: Node & {[key: string]: unknown}) => void;
+
+export interface WalkerContext {
+	skip(): void;
+	break():  void;
+	remove(): void;
+	replace<T extends Node>(node: T): void;
 }
 
-type VisitorFunction = (this: WalkerContext, node: Node, parent?: Parent, index?: number) => void;
+export type VisitorFunction = (this: WalkerContext, node: Node, parent?: Parent, index?: number) => void;
+
+
+export function walk (
+	node: Node,
+	{enter, leave} : {enter?: VisitorFunction, leave?: VisitorFunction},
+): Node {
+	const instance = new Walker(enter, leave);
+	return instance.visit(true, node) as Node;
+}
 
 
 class Walker {
@@ -39,7 +49,7 @@ class Walker {
 		this.should_replace = null;
 	}
 
-	visit(node: Node, parent?: Parent, index?: number): Node | null {
+	visit(root: boolean, node: Node, parent?: Parent, index?: number): Node | null {
 		// Enter function
 		let should_skip: boolean = false;
 
@@ -50,14 +60,24 @@ class Walker {
 				remove: this.should_remove,
 				replace: this.should_replace
 			};
-			
+
 			this.enter.call(this.context, node, parent, index);
 
 			if (this.should_replace) {
-				node = this.should_replace;
+				if (root) {
+					for (const key of [...Object.keys(node), ...Object.keys(this.should_replace)]) {
+						if (key in this.should_replace) {
+							(node as any)[key] = (this.should_replace as any)[key];
+						} else if (key in node) {
+							delete (node as any)[key];
+						}
+					}
+				} else {
+					node = this.should_replace;
+				}
 			}
 
-			if (this.should_remove) {
+			if (this.should_remove && !root) {
 				this.should_skip = savedContext.skip;
 				this.should_break = savedContext.break;
 				this.should_remove = savedContext.remove;
@@ -83,7 +103,7 @@ class Walker {
 		// Recurse over children
 		if (!should_skip && this.nodeIsParent(node)) {
 			for (let i=0 ; i < node.children.length ; i++) {
-				const returnNode = this.visit(node.children[i], node, i);
+				const returnNode = this.visit(false, node.children[i], node, i);
 				if (returnNode) {
 					node.children[i] = returnNode;
 				} else {
@@ -103,10 +123,20 @@ class Walker {
 			this.leave.call(this.context, node, parent, index);
 
 			if (this.should_replace) {
-				node = this.should_replace;
+				if (root) {
+					for (const key of [...Object.keys(node), ...Object.keys(this.should_replace)]) {
+						if (key in this.should_replace) {
+							(node as any)[key] = (this.should_replace as any)[key];
+						} else if (key in node) {
+							delete (node as any)[key];
+						}
+					}
+				} else {
+					node = this.should_replace;
+				}
 			}
 
-			if (this.should_remove) {
+			if (this.should_remove && !root) {
 				this.should_remove = savedContext.remove;
 				this.should_replace = savedContext.replace;
 				return null;
@@ -122,13 +152,4 @@ class Walker {
 	nodeIsParent(node: Node): node is Parent {
 		return 'children' in node;
 	}
-}
-
-
-export function walk(
-	node: Node,
-	{enter, leave} : {enter?: VisitorFunction, leave?: VisitorFunction},
-) {
-	const instance = new Walker(enter, leave);
-	return instance.visit(node);
 }
