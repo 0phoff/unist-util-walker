@@ -6,6 +6,11 @@ on:
       - '**'
     tags-ignore:
       - 'v*'
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - 'tsconfig.json'
+      - 'pnpm-lock.yaml'
 
 jobs:
   small:
