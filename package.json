@@ -35,11 +35,11 @@
     ],
     "scripts": {
         "build": "tsc",
-        "dev": "tsc --watch",
+        "start": "tsc --watch",
+        "prepack": "npm run build",
         "test-api": "tsx node_modules/uvu/bin.js test \"^(base|actions)\\.ts$\"",
         "test-cov": "c8 --check-coverage --100 --reporter lcov pnpm run test-api",
-        "test": "pnpm run build && pnpm run test-cov",
-        "prepack": "npm run build"
+        "test": "pnpm run build && pnpm run test-cov"
     },
     "devDependencies": {
         "@types/node": "^18.0.1",
