@@ -63,6 +63,6 @@ Inside of the `enter` and `leave` functions, you can call the following function
 - `this.skip()`  
   Skips children, but still runs the leave function of the current node (only useful in enter).
 - `this.remove()`  
-  Removes the node from the tree.
+  Removes the node from the tree (has no effect on root node).
 - `this.replace(node: Node)`  
   Replaces the node with a new one.
