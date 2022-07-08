@@ -41,7 +41,7 @@ class Walker {
 
 	visit(node: Node, parent?: Parent, index?: number): Node | null {
 		// Enter function
-		let should_skip;
+		let should_skip: boolean = false;
 
 		if (this.enter) {
 			const savedContext = {
