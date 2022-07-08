@@ -9,14 +9,14 @@ export interface WalkerContext {
 	skip(): void;
 	break():  void;
 	remove(): void;
-	replace<T extends Node>(node: T): void;
+	replace<N extends Node>(node: N): void;
 }
 
 export type VisitorFunction = (this: WalkerContext, node: Node, parent?: Parent, index?: number) => void;
 
 
-export function walk (
-	node: Node,
+export function walk<N extends Node> (
+	node: N,
 	{enter, leave} : {enter?: VisitorFunction, leave?: VisitorFunction},
 ): Node {
 	const instance = new Walker(enter, leave);
