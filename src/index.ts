@@ -4,13 +4,13 @@
  */
 import { Node, Parent } from 'unist';
 
-
 interface WalkerContext {
 	skip: () => void;
 	break: () => void;
 	remove: () => void;
-	replace: (node: Node) => void;
+	replace: (node: Node & {[key: string]: unknown}) => void;
 }
+
 type VisitorFunction = (this: WalkerContext, node: Node, parent?: Parent, index?: number) => void;
 
 
@@ -30,7 +30,7 @@ class Walker {
 			skip: () => {this.should_skip = true},
 			break: () => {this.should_break = true},
 			remove: () => {this.should_remove = true},
-			replace: (node: Node) => {this.should_replace = node},
+			replace: (node) => {this.should_replace = node},
 		};
 
 		this.should_skip = false;
