@@ -1,6 +1,6 @@
 {
     "name": "unist-util-walker",
-    "version": "0.1.2",
+    "version": "1.0.0",
     "description": "Walk unist trees with enter and leave functions",
     "license": "MIT",
     "author": "0phoff <0phoff@users.noreply.github.com>",
